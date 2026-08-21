@@ -1,17 +1,27 @@
-<h6>Order Page</h6>
-
-
-<div class="row">
-
-  <div class="col-md-6">
-    <product-view-component />
-    <product-view-component />
-    <product-view-component />
-    <product-view-component />
+<section class="page-panel order-workspace">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Operations</p>
+      <h1>Billing / POS</h1>
+      <p>Quick restaurant billing with product catalog, current order, GST totals, and receipt print.</p>
+    </div>
   </div>
 
-  <div class="col-md-6">
-    <order-view-component/>
+  <div class="main-wrap embedded">
+    <main class="catalog">
+      <div class="search-container active">
+        <input #searchBox type="text" class="form-control" placeholder="Search product..." [value]="searchText" (input)="search(searchBox.value)">
+      </div>
+
+      <app-category-list [categories]="pos.categories" [activeCategory]="activeCategory" (categoryChange)="changeCategory($event)" />
+
+      <app-product-catalog [products]="filteredProducts" (productClick)="addProduct($event)" />
+    </main>
+
+    <app-order-panel (checkout)="checkout()" (hold)="holdOrder()" (print)="openReceipt()" />
   </div>
 
-</div>
+  @if (showReceipt) {
+    <app-receipt (close)="closeReceipt()" />
+  }
+</section>

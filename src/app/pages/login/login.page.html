@@ -1,0 +1,31 @@
+<div class="login-page">
+  <section class="login-card">
+    <div class="login-brand">
+      <span class="login-dot"></span>
+      <div>
+        <h1>Single Page Order POS</h1>
+        <p>Restaurant, cafe, and hotel billing workspace</p>
+      </div>
+    </div>
+
+    <form class="login-form" (ngSubmit)="login()">
+      <label>
+        Username
+        <input name="username" type="text" [(ngModel)]="username" autocomplete="username">
+      </label>
+
+      <label>
+        Password
+        <input name="password" type="password" [(ngModel)]="password" autocomplete="current-password">
+      </label>
+
+      @if (error) {
+        <p class="login-error">{{ error }}</p>
+      }
+
+      <button type="submit">Login & Open Dashboard</button>
+    </form>
+
+    <p class="login-hint">Demo: use any non-empty username and password.</p>
+  </section>
+</div>

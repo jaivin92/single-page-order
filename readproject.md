@@ -29,7 +29,7 @@
 1. `src/main.ts` bootstraps the standalone Angular application.
 2. `src/app/app.config.ts` registers router providers using `src/app/app.routes.ts`.
 3. `src/app/app.ts` is the root component used by bootstrap.
-4. `src/app/app.html` currently renders the main POS layout directly with shared/top-level components.
+4. `src/app/app.html` renders a `router-outlet`; authenticated pages render inside `AppShellComponent` with sidebar navigation.
 
 ## Routes
 
@@ -37,7 +37,21 @@ Defined in `src/app/app.routes.ts`.
 
 | Path | Target | Notes |
 | --- | --- | --- |
-| `''` | Lazy-loaded `OrderPage` from `src/app/pages/order/order.page.ts` | This route exists, but the root app template currently does not render a `router-outlet`; the direct POS screen is rendered from `App` instead. |
+| `''` | Redirect to `/login` | Login is the first/default screen. |
+| `/login` | Lazy-loaded `LoginPage` | Public login page with `noindex, nofollow` SEO metadata. |
+| `/app` | `AppShellComponent` | Auth-protected shell containing sidebar navigation and child routes. |
+| `/app/dashboard` | Lazy-loaded `DashboardPage` | Default authenticated dashboard. |
+| `/app/order` | Lazy-loaded `OrderPage` | Billing/POS screen. |
+| `/app/tables` | Lazy-loaded `TableManagementPage` | Table management placeholder module. |
+| `/app/kitchen-tickets` | Lazy-loaded `KitchenTicketsPage` | KOT/kitchen tickets placeholder module. |
+| `/app/held-orders` | Lazy-loaded `HeldOrdersPage` | Held orders placeholder module. |
+| `/app/customers` | Lazy-loaded `CustomersPage` | Customer records placeholder module. |
+| `/app/inventory` | Lazy-loaded `InventoryPage` | Inventory placeholder module. |
+| `/app/reports` | Lazy-loaded `ReportsPage` | Reports placeholder module. |
+| `/app/staff-roles` | Lazy-loaded `StaffRolesPage` | Staff and roles placeholder module. |
+| `/app/settings` | Lazy-loaded `SettingsPage` | Settings placeholder module. |
+| `/app/audit-log` | Lazy-loaded `AuditLogPage` | Audit log placeholder module. |
+| `**` | Redirect to `/login` | Fallback route. |
 
 ## Root App Shell
 
@@ -47,35 +61,21 @@ Root component class: `App`.
 
 Responsibilities:
 
-- Injects `PosService`.
-- Holds UI state:
-  - `searchText`
-  - `activeCategory`
-  - `showReceipt`
-- Filters products by search text and category.
-- Handles category changes, search input, product add, checkout, hold order, and receipt modal open/close.
+- Renders the root `RouterOutlet`.
+- Initializes dynamic SEO updates through `SeoService`.
+- Leaves POS order state and filtering inside `OrderPage`.
 
 Imported UI pieces:
 
-- `TopbarComponent`
-- `CategoryListComponent`
-- `ProductCatalogComponent`
-- `OrderPanelComponent`
-- `ReceiptComponent`
+- `RouterOutlet`
 
 ### `src/app/app.html`
 
-Current rendered POS layout:
+Current rendered layout:
 
-- Top bar
-- Catalog area
-  - Search input
-  - Category list
-  - Product catalog grid
-- Order panel
-- Conditional receipt modal when `showReceipt` is true
-
-Note: older router/header markup exists as comments.
+- Root Angular `router-outlet`
+- `/login` renders the login page first
+- `/app/*` renders the authenticated shell with sidebar and child routes
 
 ## Pages
 
@@ -85,19 +85,23 @@ Angular standalone-style page component class: `OrderPage`.
 
 Imports:
 
-- `ProductViewComponent`
-- `OrderViewComponent`
+- `CategoryListComponent`
+- `ProductCatalogComponent`
+- `OrderPanelComponent`
+- `ReceiptComponent`
 
 Template: `src/app/pages/order/order.page.html`.
 
+Responsibilities:
+
+- Injects `PosService`.
+- Holds POS screen UI state such as search text, active category, and receipt visibility.
+- Filters products by search text and category.
+- Handles category changes, product add, checkout, hold order, and receipt modal open/close.
+
 ### `src/app/pages/order/order.page.html`
 
-Simple page layout containing repeated `product-view-component` instances and one `order-view-component`.
-
-Current status:
-
-- Looks like an early placeholder/prototype page.
-- It is route-loaded by `app.routes.ts`, but not visible in the current root layout unless a router outlet is restored.
+Authenticated billing/POS page containing the catalog search, category filters, product catalog grid, order panel, and conditional receipt modal.
 
 ## Feature Components
 
@@ -297,6 +301,25 @@ Current status:
 - Not active in the current app template; previous usage is commented in `src/app/app.html`.
 
 ## Services
+
+### `src/app/services/auth.service.ts`
+
+Service class: `AuthService`.
+
+Purpose:
+
+- Stores a simple local demo session in `localStorage`.
+- Exposes an `isAuthenticated` signal.
+- Provides `login()` and `logout()` methods for the login page and sidebar.
+
+### `src/app/services/auth.guard.ts`
+
+Guard: `authGuard`.
+
+Purpose:
+
+- Protects `/app/*` routes.
+- Redirects unauthenticated users to `/login`.
 
 ### `src/app/services/seo.service.ts`
 
