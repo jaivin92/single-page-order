@@ -298,6 +298,23 @@ Current status:
 
 ## Services
 
+### `src/app/services/seo.service.ts`
+
+Service class: `SeoService`.
+
+Purpose:
+
+- Provides dynamic page-wise SEO updates for Angular routes.
+- Updates document title, description, keywords, robots, canonical URL, Open Graph tags, Twitter card tags, and JSON-LD structured data.
+- Reads route-level `data.seo` from Angular router navigation events.
+- Provides a helper for building restaurant/POS SEO metadata for future pages.
+
+Current setup:
+
+- `App` initializes the SEO service during root component construction.
+- The root route has SEO data for the restaurant POS billing screen.
+- `src/index.html` contains baseline SEO tags before Angular runtime updates them.
+
 ### `src/app/services/pos.service.ts`
 
 Service class: `PosService`.

@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/component/header/header.component";
 import { TopbarComponent } from "./shared/component/topbar/topbar.component";
 import { PosService } from './services/pos.service';
+import { SeoService } from './services/seo.service';
 import { CategoryListComponent } from "./component/category/category-list.component";
 import { ProductCatalogComponent } from "./component/productcatlog/product-catalog.component";
 import { OrderPanelComponent } from "./component/orderpanel/order-panel.component";
@@ -19,11 +20,17 @@ export class App {
 
   readonly pos = inject(PosService);
 
+  private readonly seo = inject(SeoService);
+
   searchText = '';
 
   activeCategory = 'All';
 
   showReceipt = false;
+
+  constructor() {
+    this.seo.init();
+  }
 
   get filteredProducts() {
 
