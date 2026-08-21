@@ -1,1 +1,285 @@
-/* You can add global styles to this file, and also import other style files */
+@import url(
+  'https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap'
+);
+
+:root {
+
+  --navy: #16233F;
+  --navy-2: #22335A;
+
+  --slate: #5A6478;
+
+  --amber: #E8A33D;
+
+  --green: #2F9E68;
+
+  --bg: #F3F5FA;
+
+  --card: #FFFFFF;
+
+  --border: #E4E7F0;
+
+  --paper: #FFFDF8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--bg);
+
+  font-family: 'Inter', sans-serif;
+
+  color: var(--navy);
+}
+
+body {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+button {
+  font-family: 'Sora', sans-serif;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D6DAE6;
+  border-radius: 8px;
+}
+
+
+
+@media print {
+
+  /* Hide everything */
+  body.printing-receipt > * {
+    display: none !important;
+  }
+
+
+  /* Show Angular receipt */
+  body.printing-receipt
+  app-receipt {
+    display: block !important;
+
+    position: static !important;
+
+    width: 80mm !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+  }
+
+
+  /* Receipt backdrop becomes transparent */
+  body.printing-receipt
+  .receipt-backdrop {
+
+    position: static !important;
+
+    display: block !important;
+
+    width: 80mm !important;
+
+    min-width: 80mm !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    padding: 0 !important;
+
+    margin: 0 !important;
+
+    background: #fff !important;
+
+    box-shadow: none !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* Receipt card */
+  body.printing-receipt
+  .receipt-card {
+
+    width: 80mm !important;
+
+    max-width: 80mm !important;
+
+    height: auto !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    animation: none !important;
+
+    background: #fff !important;
+  }
+
+
+  /* Actual bill */
+  body.printing-receipt
+  #receiptPaper {
+
+    display: block !important;
+
+    position: static !important;
+
+    width: 80mm !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    margin: 0 !important;
+
+    padding: 6mm 5mm !important;
+
+    background: #fff !important;
+
+    color: #1a1a1a !important;
+
+    box-shadow: none !important;
+  }
+
+
+  /* Hide close button */
+  body.printing-receipt
+  .receipt-close {
+
+    display: none !important;
+  }
+
+
+  /* Hide buttons */
+  body.printing-receipt
+  .receipt-actions {
+
+    display: none !important;
+  }
+
+
+  /* Don't show backdrop animation */
+  body.printing-receipt
+  .receipt-backdrop {
+
+    animation: none !important;
+  }
+
+
+  /* Don't show card animation */
+  body.printing-receipt
+  .receipt-card {
+
+    animation: none !important;
+  }
+
+
+  /* Receipt typography */
+
+  body.printing-receipt
+  #receiptPaper .r-brand {
+
+    font-family:
+      'Courier New',
+      monospace !important;
+
+    font-weight: 800 !important;
+
+    font-size: 14px !important;
+
+    color: #16233F !important;
+  }
+
+
+  body.printing-receipt
+  #receiptPaper .r-sub {
+
+    font-size: 10px !important;
+
+    color: #666 !important;
+  }
+
+
+  body.printing-receipt
+  #receiptPaper .r-row {
+
+    display: flex !important;
+
+    justify-content: space-between !important;
+
+    width: 100% !important;
+  }
+
+
+  body.printing-receipt
+  #receiptPaper .r-line-sub {
+
+    font-size: 10px !important;
+
+    color: #666 !important;
+  }
+
+
+  body.printing-receipt
+  #receiptPaper .r-total {
+
+    font-size: 13px !important;
+
+    font-weight: 700 !important;
+  }
+
+
+  body.printing-receipt
+  #receiptPaper .r-footer {
+
+    font-size: 10px !important;
+
+    color: #555 !important;
+  }
+}
+
+
+@page {
+
+  size: 80mm auto;
+
+  margin: 0;
+}

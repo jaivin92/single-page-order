@@ -1,0 +1,219 @@
+<div
+  class="order-panel"
+  [class.classic]="viewMode === 'classic'"
+  [class.compact]="viewMode === 'compact'"
+>
+
+  <div class="order-header">
+
+    <div>
+
+      <div class="ttl">
+
+        <i class="bi bi-receipt"></i>
+
+        Current Order
+
+        <span class="cart-badge">
+          {{ pos.totalQty() }}
+        </span>
+
+      </div>
+
+      <div class="ord-no">
+        Ticket #A-1042
+      </div>
+
+    </div>
+
+    <div class="view-toggle">
+
+      <button
+        [class.active]="viewMode === 'classic'"
+        (click)="setView('classic')"
+      >
+        Classic
+      </button>
+
+      <button
+        [class.active]="viewMode === 'compact'"
+        (click)="setView('compact')"
+      >
+        Compact
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="order-items">
+
+    @if (pos.order().length === 0) {
+
+      <div class="order-empty">
+
+        <i class="bi bi-cart3"></i>
+
+        <p>
+          No items yet — tap a product
+          from the catalog to start this order.
+        </p>
+
+      </div>
+
+    } @else {
+
+      @for (item of pos.order(); track item.id) {
+
+        <div class="oline">
+
+          <div class="icon-tile-sm">
+
+            <i
+              class="bi"
+              [class]="item.icon"
+            ></i>
+
+          </div>
+
+          <div class="info">
+
+            <div class="name">
+              {{ item.name }}
+            </div>
+
+            <div class="unit mono">
+              {{ pos.formatCurrency(item.price) }}
+              / unit
+            </div>
+
+          </div>
+
+          <div class="qty-ctrl">
+
+            <button
+              type="button"
+              (click)="decrease(item.id)"
+            >
+              −
+            </button>
+
+            <span>
+              {{ item.qty }}
+            </span>
+
+            <button
+              type="button"
+              (click)="increase(item.id)"
+            >
+              +
+            </button>
+
+          </div>
+
+          <div class="line-total mono">
+
+            {{
+              pos.formatCurrency(
+                item.price * item.qty
+              )
+            }}
+
+          </div>
+
+          <i
+            class="bi bi-x-lg remove-x"
+            (click)="remove(item.id)"
+          ></i>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+
+  <div class="perf-edge"></div>
+
+
+  <div class="order-summary">
+
+    <div class="sum-row">
+
+      <span>Subtotal</span>
+
+      <span class="mono">
+        {{ pos.formatCurrency(pos.subtotal()) }}
+      </span>
+
+    </div>
+
+
+    <div class="sum-row">
+
+      <span>
+        GST ({{ pos.gstRate }}%)
+      </span>
+
+      <span class="mono">
+        {{ pos.formatCurrency(pos.tax()) }}
+      </span>
+
+    </div>
+
+
+    <div class="sum-row total">
+
+      <span>Total</span>
+
+      <span class="mono">
+        {{ pos.formatCurrency(pos.grandTotal()) }}
+      </span>
+
+    </div>
+
+
+    <button
+      class="btn-checkout"
+      [disabled]="pos.order().length === 0"
+      (click)="checkout.emit()"
+    >
+
+      <i class="bi bi-credit-card"></i>
+
+      Charge Customer
+
+    </button>
+
+
+    <button
+      class="btn-hold"
+      [disabled]="pos.order().length === 0"
+      (click)="hold.emit()"
+    >
+
+      <i class="bi bi-pause-circle"></i>
+
+      Hold Order
+
+    </button>
+
+
+    <button
+      class="btn-print"
+      [disabled]="pos.order().length === 0"
+      (click)="print.emit()"
+    >
+
+      <i class="bi bi-printer"></i>
+
+      Print Bill
+
+    </button>
+
+  </div>
+
+</div>

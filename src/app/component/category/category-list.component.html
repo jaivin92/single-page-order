@@ -1,0 +1,16 @@
+<div class="cat-pills">
+
+  @for (category of categories; track category) {
+
+    <button
+      type="button"
+      class="cat-pill"
+      [class.active]="category === activeCategory"
+      (click)="selectCategory(category)"
+    >
+      {{ category }}
+    </button>
+
+  }
+
+</div>

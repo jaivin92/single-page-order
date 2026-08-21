@@ -1,0 +1,146 @@
+<div class="receipt-backdrop">
+
+  <div class="receipt-card">
+
+    <button
+      class="receipt-close"
+      (click)="close.emit()"
+    >
+      <i class="bi bi-x"></i>
+    </button>
+
+
+    <div id="receiptPaper">
+
+      <div class="r-center">
+
+        <div class="r-brand">
+          BUILDRIGHT HARDWARE
+        </div>
+
+        <div class="r-sub">
+
+          Hardware & Tools Trading Co.
+          <br>
+
+          Counter 02 · Ashish R.
+
+        </div>
+
+      </div>
+
+
+      <hr>
+
+
+      <div class="r-row">
+        <span>Ticket</span>
+        <span>#A-1042</span>
+      </div>
+
+      <div class="r-row">
+        <span>Date</span>
+        <span>{{ today | date:'dd MMM yyyy' }}</span>
+      </div>
+
+      <div class="r-row">
+        <span>Time</span>
+        <span>{{ today | date:'HH:mm' }}</span>
+      </div>
+
+
+      <hr>
+
+
+      @for (item of pos.order(); track item.id) {
+
+        <div class="r-line-name">
+          {{ item.name }}
+        </div>
+
+        <div class="r-line-sub">
+
+          <span>
+            {{ item.qty }} x
+            {{ pos.formatCurrency(item.price) }}
+          </span>
+
+          <span>
+            {{ pos.formatCurrency(item.price * item.qty) }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <hr>
+
+
+      <div class="r-row">
+        <span>Subtotal</span>
+        <span>
+          {{ pos.formatCurrency(pos.subtotal()) }}
+        </span>
+      </div>
+
+      <div class="r-row">
+        <span>GST (18%)</span>
+        <span>
+          {{ pos.formatCurrency(pos.tax()) }}
+        </span>
+      </div>
+
+
+      <hr>
+
+
+      <div class="r-row r-total">
+
+        <span>TOTAL</span>
+
+        <span>
+          {{ pos.formatCurrency(pos.grandTotal()) }}
+        </span>
+
+      </div>
+
+
+      <div class="r-footer r-center">
+
+        Thank you for shopping with us!
+        <br>
+
+        Goods once sold are not returnable.
+        <br>
+
+        *** buildright.example ***
+
+      </div>
+
+    </div>
+
+
+    <div class="receipt-actions">
+
+      <button
+        class="btn-do-print"
+        (click)="print()"
+      >
+        <i class="bi bi-printer"></i>
+        Print
+      </button>
+
+      <button
+        class="btn-do-pdf"
+        (click)="downloadPDF()"
+      >
+        <i class="bi bi-file-earmark-pdf"></i>
+        Save PDF
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

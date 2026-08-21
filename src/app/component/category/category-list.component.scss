@@ -1,0 +1,39 @@
+.cat-pills {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.cat-pill {
+  border: 1px solid #E4E7F0;
+  background: #fff;
+
+  color: #5A6478;
+
+  padding: .42rem 1rem;
+
+  border-radius: 30px;
+
+  font-size: .83rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .18s ease;
+}
+
+.cat-pill:hover {
+  border-color: #22335A;
+  color: #16233F;
+}
+
+.cat-pill.active {
+  background: #16233F;
+  color: #fff;
+
+  border-color: #16233F;
+
+  box-shadow:
+    0 4px 10px rgba(22,35,63,.25);
+}

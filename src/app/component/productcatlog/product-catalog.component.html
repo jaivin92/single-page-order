@@ -1,0 +1,53 @@
+<div class="section-title">
+
+  Catalog
+
+  <span class="count">
+    {{ products.length }} items
+  </span>
+
+</div>
+
+<div class="grid">
+
+  @for (product of products; track product.id) {
+
+    <div
+      class="pcard"
+      (click)="addProduct(product)"
+    >
+
+      <div class="icon-tile">
+
+        <i
+          class="bi"
+          [class]="product.icon"
+        ></i>
+
+      </div>
+
+      <div class="pname">
+        {{ product.name }}
+      </div>
+
+      <div class="pmeta">
+
+        <span class="pprice mono">
+          ₹{{ product.price }}
+        </span>
+
+        <span
+          class="stock"
+          [class.in]="product.stock === 'in'"
+          [class.low]="product.stock === 'low'"
+        >
+          {{ product.stock === 'in' ? 'In stock' : 'Low' }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
