@@ -1,0 +1,40 @@
+<aside class="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-brand">
+      <span class="sidebar-logo">S</span>
+      @if (!collapsed) {
+        <span>Single POS</span>
+      }
+    </div>
+
+    <button class="sidebar-toggle" type="button" (click)="toggleSidebar.emit()">
+      <i class="bi" [class.bi-chevron-left]="!collapsed" [class.bi-chevron-right]="collapsed"></i>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (section of sections; track section.title) {
+      <div class="sidebar-section">
+        @if (!collapsed) {
+          <div class="sidebar-title">{{ section.title }}</div>
+        }
+
+        @for (item of section.items; track item.route) {
+          <a class="sidebar-link" [routerLink]="item.route" routerLinkActive="active">
+            <i class="bi {{ item.icon }}"></i>
+            @if (!collapsed) {
+              <span>{{ item.label }}</span>
+            }
+          </a>
+        }
+      </div>
+    }
+  </nav>
+
+  <button class="sidebar-logout" type="button" (click)="logout()">
+    <i class="bi bi-box-arrow-left"></i>
+    @if (!collapsed) {
+      <span>Logout</span>
+    }
+  </button>
+</aside>

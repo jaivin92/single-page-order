@@ -1,0 +1,7 @@
+<div class="app-shell" [class.sidebar-collapsed]="sidebarCollapsed">
+  <app-sidebar [collapsed]="sidebarCollapsed" (toggleSidebar)="toggleSidebar()" />
+
+  <main class="shell-main">
+    <router-outlet />
+  </main>
+</div>
