@@ -377,11 +377,40 @@ Fields:
 
 ## Styles and Assets
 
-Global/application style files:
+### Global stylesheet
+
+Primary global stylesheet:
 
 - `src/styles.scss`
-- `src/app/app.scss`
+
+Use `src/styles.scss` for app-wide styling that should be available everywhere, including:
+
+- CSS resets/base element styles
+- Bootstrap override variables or global Bootstrap utility adjustments
+- Theme tokens such as colors, font families, spacing scale, border radius, shadows, and z-index values
+- Shared utility classes such as `.mono`, layout helpers, button helpers, receipt/print helpers, and responsive helpers
+- Global typography rules
+- Global form/input/button defaults
+- Any cross-component styles that are reused by multiple pages or components
+
+Avoid scattering reusable/global rules across component SCSS files. Keep component SCSS files focused on styles that belong only to that component.
+
+### Application and component styles
+
+Other style files currently present:
+
+- `src/app/app.scss` for root app layout styles
 - component-level `.scss` files for topbar, category list, product catalog, order panel, and receipt
+
+Recommended stylesheet boundary:
+
+| Style type | Suggested location |
+| --- | --- |
+| Global reset/theme/utilities | `src/styles.scss` |
+| Shared classes reused by several components | `src/styles.scss` |
+| Root shell layout only | `src/app/app.scss` |
+| Component-private visuals | Component `.scss` file |
+| Print-wide receipt rules reused by preview/print/PDF | Prefer `src/styles.scss` or a shared imported SCSS partial |
 
 Static assets:
 

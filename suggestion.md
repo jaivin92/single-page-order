@@ -74,11 +74,16 @@ These are shared improvement suggestions after reading the Angular project. They
    - `*.compnent.html` appears misspelled.
    - Recommended direction: use consistent Angular naming conventions.
 
-3. **Use consistent formatting**
+3. **Centralize global SCSS in `src/styles.scss`**
+   - Keep global theme tokens, resets, shared utility classes, Bootstrap overrides, typography, form defaults, and cross-component helpers in `src/styles.scss`.
+   - Keep component SCSS files only for component-private styles.
+   - If receipt print/PDF styles must be shared, prefer a global/shared SCSS location instead of duplicating large CSS blocks in TypeScript.
+
+4. **Use consistent formatting**
    - Some files use double quotes and spacing styles that differ from Prettier settings.
    - Recommended direction: run project formatter after deciding formatting policy.
 
-4. **Add unit tests around `PosService`**
+5. **Add unit tests around `PosService`**
    - Core business logic lives in `PosService`.
    - Recommended tests: add product, increment/decrement quantity, remove item, clear order, subtotal, tax, grand total, and currency formatting.
 
